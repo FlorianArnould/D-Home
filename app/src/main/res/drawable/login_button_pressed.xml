@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="135"
+        android:endColor="#d32f2f"
+        android:startColor="#512da8"
+        android:type="linear" />
+    <corners
+        android:bottomLeftRadius="@dimen/login_input_radius"
+        android:bottomRightRadius="@dimen/login_input_radius"
+        android:topLeftRadius="@dimen/login_input_radius"
+        android:topRightRadius="@dimen/login_input_radius" />
+</shape>

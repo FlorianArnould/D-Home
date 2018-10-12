@@ -1,0 +1,39 @@
+language: android
+sudo: false
+jdk:
+- oraclejdk8
+before_install:
+- yes | sdkmanager "platforms;android-28"
+- yes | sdkmanager "tools"
+- yes | sdkmanager "platform-tools"
+- ls ${ANDROID_HOME}/platforms/
+- yes | sdkmanager "system-images;android-27;google_apis;x86"
+- yes | sdkmanager "emulator"
+- chmod +x gradlew
+env:
+  global:
+  - ADB_INSTALL_TIMEOUT=10
+  - LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64/qt/lib
+  - ANDROID_SDK_ROOT=${ANDROID_HOME}
+android:
+  components:
+  - tools
+  - build-tools-28.0.2
+licenses:
+- 'android-sdk-license-.+'
+before_script:
+- echo no | avdmanager create avd --force -n test -k "system-images;android-27;google_apis;x86"
+- ${ANDROID_HOME}/emulator/emulator -avd test -no-audio -no-window &
+- while [ "`adb shell getprop sys.boot_completed | tr -d '\r' `" != "1" ] ; do sleep 1; done
+- adb shell input keyevent 82 &
+addons:
+  sonarcloud:
+    organization: florianarnould-github
+    branches:
+    - master
+    - develop
+    token:
+      secure: hTOBu98FgcQMmD29bujRAZcqCBNj2wm10RITZPiGEVGXRCE2w7J/trGVA899TfzDt8tFkrDz8sw29uS/djPFfly43SD/oWiN4ukV3WGqvIGw4pXGiXlkL/wbqKV3HeG5ZZB27UNLFvBk0C+lK01q3tlCB+U8wotqLg4k74LqPtCf4scyUh6hhUchCNAQXYyXn9JG8Qevw499fUo+VNlRAkllAzS96WYy0bj7G7XHCYVUGRqoksFwVm4nk3ZXafj/NSYAnUnxg72N0BsSGTD0ezRG2i2eLfTu7q/TZrLGBBDHX1x4wyKqzPf/nbOierlgePK5kVrt8I3M1Ho2g7Jryb+Xwte8/EVnlmbcloIy8F65PfngjT/IMWmg+ZbgCC+Ol4VAXVdgh5Ygz6LdJWcnpTVd/vPWFJJdWttW7Ebtwi1hLy9WJcWu7VPMcOguvpN9u6LOoHbTWrnlzrqL1VI5c6Dl3MfDtW4wSZiVCYXb6XshhDyDjVrzENbRMF2nnr2AeKJfGMrBKyESm9k+kHHG4ElmY/B2RTX1L7PbMECQY3VGfQVluQzf8TsruyqsH+NiaDAQe2P5AWTK31aYVl5l+hC2cxR9Y84Wkrt6tJ/gQMxXbWYfFSfor+mZNTl/QWxE762wFZKDeRmb/0FGrLDk1Vz7nE8xv46FGdIS0gahCbc=
+
+script:
+- "./gradlew sonarqube"

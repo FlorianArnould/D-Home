@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fr.socket.florian.dhome.view.login.ContainerViewHandler xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/ic_light_bulb"
+        app:layout_constraintBottom_toTopOf="@id/form_layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/form_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:alpha="0"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:alpha="0"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="#ef5350" />
+
+        <RelativeLayout
+            android:id="@+id/first_row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/error_text"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/edit_text_border">
+
+            <ImageView
+                android:id="@+id/server_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/server_icon"
+                android:src="@drawable/ic_server" />
+
+            <EditText
+                android:id="@+id/edit_server_url"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/server_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/server_url"
+                android:inputType="textUri"
+                android:singleLine="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/primary_text_dark"
+                android:textColorHint="@android:color/tertiary_text_dark" />
+
+            <ProgressBar
+                android:id="@+id/server_check_progress"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:alpha="0"
+                android:indeterminateTint="#FF9e9e9e" />
+
+            <ImageView
+                android:id="@+id/server_check_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="15dp"
+                android:alpha="0"
+                android:contentDescription="@string/server_check_image"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/second_row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/first_row"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/edit_text_border">
+
+            <ImageView
+                android:id="@+id/user_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/username_icon"
+                android:src="@drawable/ic_user" />
+
+            <EditText
+                android:id="@+id/edit_username"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/user_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/username"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/primary_text_dark"
+                android:textColorHint="@android:color/tertiary_text_dark" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/third_row"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/second_row"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/edit_text_border">
+
+            <ImageView
+                android:id="@+id/password_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:contentDescription="@string/lock_icon"
+                android:src="@drawable/ic_locked" />
+
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@+id/password_icon"
+                android:background="@android:color/transparent"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/primary_text_dark"
+                android:textColorHint="@android:color/tertiary_text_dark" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_row"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/login_button" />
+
+            <TextView
+                android:id="@+id/button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:elevation="5dp"
+                android:text="@string/sign_in"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@drawable/login_button_text_color" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:alpha="0"
+                android:elevation="5dp"
+                android:indeterminateTint="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/result_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:alpha="0"
+                android:contentDescription="@string/result_icon"
+                android:elevation="5dp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</fr.socket.florian.dhome.view.login.ContainerViewHandler>

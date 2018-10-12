@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">D-Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="server_url">Server URL</string>
+    <string name="app_logo">Application logo</string>
+    <string name="server_icon">server icon</string>
+    <string name="username_icon">username icon</string>
+    <string name="lock_icon">lock icon</string>
+    <string name="sign_in">Sign in</string>
+    <string name="result_icon">result_icon*</string>
+    <string name="nav_devices">Devices</string>
+    <string name="nav_notifications">Notifications</string>
+    <string name="nav_servers">Servers</string>
+    <string name="server_check_image">Server check image</string>
+</resources>
