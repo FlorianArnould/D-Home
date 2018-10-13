@@ -1,4 +1,4 @@
-package fr.socket.florian.dhome.devices;
+package fr.socket.florian.dhome.view.devices;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

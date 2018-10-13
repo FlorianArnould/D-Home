@@ -1,4 +1,4 @@
-package fr.socket.florian.dhome.devices;
+package fr.socket.florian.dhome.view.devices;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,7 +14,7 @@ import fr.socket.florian.dhome.R;
 
 public class DevicesFragment extends Fragment {
     public DevicesFragment() {
-
+        // This should be called from other classes if there are some arguments
     }
 
     @Override

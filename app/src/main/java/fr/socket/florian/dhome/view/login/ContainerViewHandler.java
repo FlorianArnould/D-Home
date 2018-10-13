@@ -29,12 +29,10 @@ public class ContainerViewHandler extends ConstraintLayout {
 
     @Override
     public boolean dispatchKeyEventPreIme(@NonNull KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && isKeyboardShown) {
             // Keyboard is hiding
-            if (isKeyboardShown) {
-                isKeyboardShown = false;
-                listener.onKeyboardHide();
-            }
+            isKeyboardShown = false;
+            listener.onKeyboardHide();
         }
         return super.dispatchKeyEventPreIme(event);
     }
@@ -43,12 +41,9 @@ public class ContainerViewHandler extends ConstraintLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         final int proposedHeight = MeasureSpec.getSize(heightMeasureSpec);
         final int actualHeight = getHeight();
-        if (actualHeight > proposedHeight) {
-            // Keyboard is showing
-            if (!isKeyboardShown) {
-                isKeyboardShown = true;
-                listener.onKeyboardShow();
-            }
+        if (actualHeight > proposedHeight && !isKeyboardShown) {
+            isKeyboardShown = true;
+            listener.onKeyboardShow();
         }
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }

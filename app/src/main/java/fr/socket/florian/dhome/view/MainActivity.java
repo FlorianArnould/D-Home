@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import fr.socket.florian.dhome.R;
-import fr.socket.florian.dhome.devices.DevicesFragment;
+import fr.socket.florian.dhome.view.devices.DevicesFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

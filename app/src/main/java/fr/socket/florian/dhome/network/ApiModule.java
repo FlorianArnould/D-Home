@@ -33,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiModule {
     @NonNull
-    private static Gson gson;
+    private final Gson gson;
     @NonNull
     private final String baseUrl;
     @NonNull
@@ -44,14 +44,14 @@ public class ApiModule {
 
         httpClientBuilder = new OkHttpClient.Builder().readTimeout(5, TimeUnit.SECONDS);
 
-        initGson();
+        gson = initGson();
 
         initHttpLogging(HttpLoggingInterceptor.Level.BODY);
 
         initSSL(context);
     }
 
-    private void initGson() {
+    private static Gson initGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setLenient();
         gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
@@ -65,7 +65,7 @@ public class ApiModule {
                 return false;
             }
         });
-        gson = gsonBuilder.create();
+        return gsonBuilder.create();
     }
 
     private void initHttpLogging(HttpLoggingInterceptor.Level level) {

@@ -11,6 +11,11 @@ import okhttp3.OkHttpClient;
 
 // TODO: 10/10/18 Remove this class
 class UnsafeOkHttpClient {
+
+    private UnsafeOkHttpClient() {
+        throw new UnsupportedOperationException("Cannot create an instance of " + getClass().getName());
+    }
+
     static OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains

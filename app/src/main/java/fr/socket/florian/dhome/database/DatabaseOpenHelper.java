@@ -21,7 +21,10 @@ class DatabaseOpenHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int from, int to) {
+        if (from != to) {
+            db.execSQL("DROP TABLE connections;");
+            onCreate(db);
+        }
     }
 }

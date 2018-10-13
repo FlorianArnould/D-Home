@@ -37,7 +37,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener, View.OnFocusChangeListener, Callback<Network.Login> {
+
+    private static final String CHECK_SERVER_LOG_TAG = "Network check server";
+    private static final String LOGIN_LOG_TAG = "Network login";
 
     private TextView errorText;
     private Database db;
@@ -46,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button button;
     private ProgressBar progress;
     private TextView text;
+    private EditText serverUrl;
+    private EditText username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,129 +94,23 @@ public class LoginActivity extends AppCompatActivity {
             }
         }, 1000);
 
+        username = findViewById(R.id.edit_username);
+
         serverCheckProgress = findViewById(R.id.server_check_progress);
         serverCheckImage = findViewById(R.id.server_check_image);
 
-        button = findViewById(R.id.button);
         progress = findViewById(R.id.progress);
         text = findViewById(R.id.button_text);
         errorText = findViewById(R.id.error_text);
 
-        final EditText serverUrl = findViewById(R.id.edit_server_url);
-        serverUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    displayServerCheckProgressBar();
-                    Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
-                            .provideApi();
-                    network.checkServer().enqueue(new Callback<Network.CheckServer>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Network.CheckServer> call, @NonNull Response<Network.CheckServer> response) {
-                            if (response.body() != null) {
-                                displayServerCheckResult(response.body().isRunning());
-                            } else {
-                                Log.e("Network check server", "Got Null body : " + response.code());
-                                displayServerCheckResult(false);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(@NonNull Call<Network.CheckServer> call, @NonNull Throwable t) {
-                            displayServerCheckResult(false);
-                            Log.e("Network check server", "Got Failure : " + t.getMessage(), t);
-                        }
-                    });
-                }
-            }
-        });
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (errorText.getAlpha() > 0) {
-                    errorText.animate().alpha(0).setDuration(500);
-                }
-                displayButtonToProgress(new Runnable() {
-                    @Override
-                    public void run() {
-                        final EditText username = findViewById(R.id.edit_username);
-                        EditText password = findViewById(R.id.edit_password);
-                        Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
-                                .provideApi();
-                        JSONObject json = new JSONObject();
-                        try {
-                            json.put("username", username.getText().toString());
-                            json.put("password", password.getText().toString());
-                        } catch (JSONException e) {
-                            Log.d("Network login", "JSON Exception : " + e.getMessage(), e);
-                        }
-                        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
-                        network.login(body).enqueue(new Callback<Network.Login>() {
-                            @Override
-                            public void onResponse(@NonNull Call<Network.Login> call, @NonNull Response<Network.Login> response) {
-                                if (response.body() != null) {
-                                    if (response.body().isAuth()) {
-                                        db.addConnection(new Connection(serverUrl.getText().toString(), username.getText().toString(), response.body().getRefreshToken(), response.body().getSessionToken()));
-                                        onSuccess();
-                                    } else {
-                                        onFailed(response.body().getMessage());
-                                        Log.e("Network login", "Got auth false : " + response.code() + " : " + response.body().getMessage());
-                                    }
-                                } else if (response.errorBody() != null) {
-                                    try {
-                                        JSONObject json = new JSONObject(response.errorBody().string());
-                                        onFailed(json.optString("message", ""));
-                                    } catch (IOException | JSONException e) {
-                                        onFailed("");
-                                        Log.e("Network login", "Cannot parse the error body : " + response.code() + " : " + e.getMessage(), e);
-                                    }
-                                } else {
-                                    onFailed("");
-                                    Log.e("Network login", "Got Null body : " + response.code());
-                                }
-
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<Network.Login> call, @NonNull Throwable t) {
-                                onFailed("");
-                                Log.e("Network login", "Got Failure : " + t.getMessage(), t);
-                            }
-
-                            private void onSuccess() {
-                                animateProgressToSuccess(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startMainActivity();
-                                    }
-                                });
-                            }
-
-                            private void onFailed(String errorMessage) {
-                                animateProgressToError();
-                                if (!errorMessage.isEmpty()) {
-                                    errorText.setText(errorMessage);
-                                    errorText.animate().alpha(1).setDuration(500);
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        serverUrl = findViewById(R.id.edit_server_url);
+        serverUrl.setOnFocusChangeListener(this);
 
         EditText editPassword = findViewById(R.id.edit_password);
-        editPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE) {
-                    button.performClick();
-                }
-                return false;
-            }
-        });
+        editPassword.setOnEditorActionListener(this);
+
+        button = findViewById(R.id.button);
+        button.setOnClickListener(this);
     }
 
     private void displayButtonToProgress(final Runnable runnable) {
@@ -310,6 +209,111 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        if (actionId == EditorInfo.IME_ACTION_NEXT || actionId == EditorInfo.IME_ACTION_DONE) {
+            button.performClick();
+        }
+        return false;
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if (!hasFocus) {
+            displayServerCheckProgressBar();
+            Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
+                    .provideApi();
+            network.checkServer().enqueue(new Callback<Network.CheckServer>() {
+                @Override
+                public void onResponse(@NonNull Call<Network.CheckServer> call, @NonNull Response<Network.CheckServer> response) {
+                    if (response.body() != null) {
+                        displayServerCheckResult(response.body().isRunning());
+                    } else {
+                        Log.e(CHECK_SERVER_LOG_TAG, "Got Null body : " + response.code());
+                        displayServerCheckResult(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<Network.CheckServer> call, @NonNull Throwable t) {
+                    displayServerCheckResult(false);
+                    Log.e(CHECK_SERVER_LOG_TAG, "Got Failure : " + t.getMessage(), t);
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (errorText.getAlpha() > 0) {
+            errorText.animate().alpha(0).setDuration(500);
+        }
+        displayButtonToProgress(new Runnable() {
+            @Override
+            public void run() {
+                EditText password = findViewById(R.id.edit_password);
+                Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
+                        .provideApi();
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("username", username.getText().toString());
+                    json.put("password", password.getText().toString());
+                } catch (JSONException e) {
+                    Log.e(LOGIN_LOG_TAG, "JSON Exception : " + e.getMessage(), e);
+                }
+                RequestBody body = RequestBody.create(MediaType.parse("application/json"), json.toString());
+                network.login(body).enqueue(LoginActivity.this);
+            }
+        });
+    }
+
+    @Override
+    public void onResponse(@NonNull Call<Network.Login> call, @NonNull Response<Network.Login> response) {
+        if (response.body() != null) {
+            if (response.body().isAuth()) {
+                db.addConnection(new Connection(serverUrl.getText().toString(), username.getText().toString(), response.body().getRefreshToken(), response.body().getSessionToken()));
+                onSuccess();
+            } else {
+                onFailed(response.body().getMessage());
+                Log.e(LOGIN_LOG_TAG, "Got auth false : " + response.code() + " : " + response.body().getMessage());
+            }
+        } else if (response.errorBody() != null) {
+            try {
+                JSONObject json = new JSONObject(response.errorBody().string());
+                onFailed(json.optString("message", ""));
+            } catch (IOException | JSONException e) {
+                onFailed("");
+                Log.e(LOGIN_LOG_TAG, "Cannot parse the error body : " + response.code() + " : " + e.getMessage(), e);
+            }
+        } else {
+            onFailed("");
+            Log.e(LOGIN_LOG_TAG, "Got Null body : " + response.code());
+        }
+    }
+
+    @Override
+    public void onFailure(@NonNull Call<Network.Login> call, @NonNull Throwable t) {
+        onFailed("");
+        Log.e(LOGIN_LOG_TAG, "Got Failure : " + t.getMessage(), t);
+    }
+
+    private void onSuccess() {
+        animateProgressToSuccess(new Runnable() {
+            @Override
+            public void run() {
+                startMainActivity();
+            }
+        });
+    }
+
+    private void onFailed(String errorMessage) {
+        animateProgressToError();
+        if (!errorMessage.isEmpty()) {
+            errorText.setText(errorMessage);
+            errorText.animate().alpha(1).setDuration(500);
+        }
     }
 }
 
