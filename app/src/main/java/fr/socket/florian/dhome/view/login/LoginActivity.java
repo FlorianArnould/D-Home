@@ -30,6 +30,9 @@ import fr.socket.florian.dhome.database.Connection;
 import fr.socket.florian.dhome.database.Database;
 import fr.socket.florian.dhome.network.ApiModule;
 import fr.socket.florian.dhome.network.Network;
+import fr.socket.florian.dhome.network.model.CheckServer;
+import fr.socket.florian.dhome.network.model.Login;
+import fr.socket.florian.dhome.utils.Listener;
 import fr.socket.florian.dhome.view.MainActivity;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -37,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener, View.OnFocusChangeListener, Callback<Network.Login> {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener, View.OnFocusChangeListener, Callback<Login> {
 
     private static final String CHECK_SERVER_LOG_TAG = "Network check server";
     private static final String LOGIN_LOG_TAG = "Network login";
@@ -75,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                db.getConnections(new Database.Callback<List<Connection>>() {
+                db.getConnections(new Listener<List<Connection>>() {
                     @Override
                     public void callback(List<Connection> answer) {
                         if (answer.isEmpty()) {
@@ -225,9 +228,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             displayServerCheckProgressBar();
             Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
                     .provideApi();
-            network.checkServer().enqueue(new Callback<Network.CheckServer>() {
+            network.checkServer().enqueue(new Callback<CheckServer>() {
                 @Override
-                public void onResponse(@NonNull Call<Network.CheckServer> call, @NonNull Response<Network.CheckServer> response) {
+                public void onResponse(@NonNull Call<CheckServer> call, @NonNull Response<CheckServer> response) {
                     if (response.body() != null) {
                         displayServerCheckResult(response.body().isRunning());
                     } else {
@@ -237,7 +240,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Network.CheckServer> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<CheckServer> call, @NonNull Throwable t) {
                     displayServerCheckResult(false);
                     Log.e(CHECK_SERVER_LOG_TAG, "Got Failure : " + t.getMessage(), t);
                 }
@@ -270,10 +273,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onResponse(@NonNull Call<Network.Login> call, @NonNull Response<Network.Login> response) {
+    public void onResponse(@NonNull Call<Login> call, @NonNull Response<Login> response) {
         if (response.body() != null) {
-            if (response.body().isAuth()) {
-                db.addConnection(new Connection(serverUrl.getText().toString(), username.getText().toString(), response.body().getRefreshToken(), response.body().getSessionToken()));
+            Login login = response.body();
+            if (login.isAuth()) {
+                db.addConnection(new Connection(serverUrl.getText().toString(), username.getText().toString(), login.getRefreshToken(), login.getSessionToken()));
                 onSuccess();
             } else {
                 onFailed(response.body().getMessage());
@@ -294,7 +298,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     @Override
-    public void onFailure(@NonNull Call<Network.Login> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<Login> call, @NonNull Throwable t) {
         onFailed("");
         Log.e(LOGIN_LOG_TAG, "Got Failure : " + t.getMessage(), t);
     }

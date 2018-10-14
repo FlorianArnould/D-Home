@@ -1,11 +1,16 @@
 package fr.socket.florian.dhome.network;
 
-import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
+import fr.socket.florian.dhome.network.model.CheckServer;
+import fr.socket.florian.dhome.network.model.Device;
+import fr.socket.florian.dhome.network.model.Login;
+import fr.socket.florian.dhome.network.model.Tokens;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface Network {
@@ -16,42 +21,10 @@ public interface Network {
     @POST("api/auth/login")
     Call<Login> login(@Body RequestBody body);
 
-    class CheckServer {
-        @SerializedName("running")
-        private boolean running;
+    @GET("api/device/all")
+    Call<List<Device>> allDevices(@Header("x-access-token") String sessionToken);
 
-        public boolean isRunning() {
-            return running;
-        }
-    }
+    @GET("api/auth/refreshToken")
+    Call<Tokens> refreshToken(@Header("x-access-token") String refreshToken);
 
-    class Login {
-        @SerializedName("auth")
-        private boolean auth;
-
-        @SerializedName("refreshToken")
-        private String refreshToken;
-
-        @SerializedName("sessionToken")
-        private String sessionToken;
-
-        @SerializedName("message")
-        private String message;
-
-        public boolean isAuth() {
-            return auth;
-        }
-
-        public String getSessionToken() {
-            return sessionToken;
-        }
-
-        public String getRefreshToken() {
-            return refreshToken;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
 }

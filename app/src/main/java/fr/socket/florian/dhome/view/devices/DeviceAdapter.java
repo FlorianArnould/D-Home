@@ -7,22 +7,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import fr.socket.florian.dhome.R;
+import fr.socket.florian.dhome.network.model.Device;
 
 class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
-    private final List<String> data;
+    private List<Device> devices;
 
     DeviceAdapter() {
-        data = new ArrayList<>();
-        data.add("alpha");
-        data.add("beta");
-        data.add("charlie");
-        data.add("tango");
-        Collections.reverse(data);
+        devices = new ArrayList<>();
+    }
+
+    void update(List<Device> devices) {
+        this.devices = devices;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -34,11 +34,11 @@ class DeviceAdapter extends RecyclerView.Adapter<DeviceViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull DeviceViewHolder deviceViewHolder, int i) {
-        deviceViewHolder.update(data.get(i));
+        deviceViewHolder.update(devices.get(i));
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return devices.size();
     }
 }

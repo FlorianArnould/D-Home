@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import fr.socket.florian.dhome.R;
+import fr.socket.florian.dhome.view.connections.ConnectionsFragment;
 import fr.socket.florian.dhome.view.devices.DevicesFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -55,7 +56,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_devices) {
-            // inflate devices fragment
+            inflateFragment(new DevicesFragment());
+        } else if (id == R.id.nav_connections) {
+            inflateFragment(new ConnectionsFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

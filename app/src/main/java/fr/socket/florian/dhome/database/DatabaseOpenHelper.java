@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 class DatabaseOpenHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "connections.db";
 
     DatabaseOpenHelper(Context context) {
@@ -14,6 +14,7 @@ class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS connections (\n" +
+                "\tid INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
                 "\turl TEXT NOT NULL,\n" +
                 "\tusername TEXT NOT NULL,\n" +
                 "\trefresh_token TEXT NOT NULL,\n" +

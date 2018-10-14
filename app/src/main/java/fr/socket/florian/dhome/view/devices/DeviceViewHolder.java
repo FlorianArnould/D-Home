@@ -12,9 +12,11 @@ import android.widget.TextView;
 import java.util.Random;
 
 import fr.socket.florian.dhome.R;
+import fr.socket.florian.dhome.network.model.Device;
 
 class DeviceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private final TextView text;
+    private final TextView name;
+    private final TextView description;
     private final RelativeLayout layout;
     private final TransitionDrawable transitionDrawable;
     private final ProgressBar progress;
@@ -22,7 +24,8 @@ class DeviceViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
 
     DeviceViewHolder(@NonNull View view) {
         super(view);
-        text = view.findViewById(R.id.text);
+        name = view.findViewById(R.id.name);
+        description = view.findViewById(R.id.description);
         layout = view.findViewById(R.id.layout);
         progress = view.findViewById(R.id.progress);
         transitionDrawable = (TransitionDrawable) view.getContext().getDrawable(R.drawable.transition_green_red);
@@ -32,8 +35,9 @@ class DeviceViewHolder extends RecyclerView.ViewHolder implements View.OnClickLi
         }
     }
 
-    void update(String str) {
-        text.setText(str);
+    void update(Device device) {
+        name.setText(device.getName());
+        description.setText(device.getDescription());
         if (new Random().nextBoolean()) {
             layout.setBackground(transitionDrawable);
             state = true;

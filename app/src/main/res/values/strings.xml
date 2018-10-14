@@ -15,6 +15,6 @@
     <string name="result_icon">result_icon*</string>
     <string name="nav_devices">Devices</string>
     <string name="nav_notifications">Notifications</string>
-    <string name="nav_servers">Servers</string>
     <string name="server_check_image">Server check image</string>
+    <string name="nav_connections">Connections</string>
 </resources>
