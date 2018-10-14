@@ -85,7 +85,7 @@ public class ApiManager implements Closeable {
 
     @Override
     public void close() {
-        if(db != null) {
+        if (db != null) {
             db.close();
         }
     }

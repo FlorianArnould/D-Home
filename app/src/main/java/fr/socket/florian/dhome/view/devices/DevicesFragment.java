@@ -3,7 +3,6 @@ package fr.socket.florian.dhome.view.devices;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +52,7 @@ public class DevicesFragment extends MainFragment {
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        if(apiManager != null){
+        if (apiManager != null) {
             apiManager.close();
         }
         apiManager = new ApiManager();
@@ -79,7 +78,7 @@ public class DevicesFragment extends MainFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(apiManager != null) {
+        if (apiManager != null) {
             apiManager.close();
         }
     }

@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 public class MainFragment extends Fragment {
     protected void setTitle(@StringRes int title) {
         AppCompatActivity activity = (AppCompatActivity) getActivity();
-        if(activity != null) {
+        if (activity != null) {
             ActionBar actionBar = activity.getSupportActionBar();
-            if(actionBar != null) {
+            if (actionBar != null) {
                 actionBar.setTitle(title);
             }
         }

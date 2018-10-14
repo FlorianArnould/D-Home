@@ -21,6 +21,15 @@ public class Database implements Closeable {
         db = new DatabaseOpenHelper(context).getWritableDatabase();
     }
 
+    private static ContentValues toContentValues(Connection connection) {
+        ContentValues values = new ContentValues();
+        values.put("url", connection.getServerUrl());
+        values.put("username", connection.getUsername());
+        values.put("refresh_token", connection.getRefreshToken());
+        values.put("session_token", connection.getSessionToken());
+        return values;
+    }
+
     public void getConnectionById(int id, @NonNull Listener<Connection> listener) {
         new GetConnectionByIdAsyncTask(db, id, listener).execute();
     }
@@ -127,14 +136,5 @@ public class Database implements Closeable {
             db.update(CONNECTIONS_TABLE, Database.toContentValues(connection), "id = ?", new String[]{String.valueOf(connection.getId())});
             return null;
         }
-    }
-
-    private static ContentValues toContentValues(Connection connection) {
-        ContentValues values = new ContentValues();
-        values.put("url", connection.getServerUrl());
-        values.put("username", connection.getUsername());
-        values.put("refresh_token", connection.getRefreshToken());
-        values.put("session_token", connection.getSessionToken());
-        return values;
     }
 }

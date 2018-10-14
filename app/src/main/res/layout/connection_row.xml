@@ -18,8 +18,8 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_below="@id/server_url"
+        android:layout_marginTop="5dp"
         android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
     <ImageView

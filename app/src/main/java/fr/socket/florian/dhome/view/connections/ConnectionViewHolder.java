@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import fr.socket.florian.dhome.R;
 import fr.socket.florian.dhome.database.Connection;
-import fr.socket.florian.dhome.network.ApiManager;
 import fr.socket.florian.dhome.network.ApiModule;
 import fr.socket.florian.dhome.network.model.CheckServer;
 import retrofit2.Call;
@@ -35,7 +34,7 @@ class ConnectionViewHolder extends RecyclerView.ViewHolder {
         new ApiModule("https://" + connection.getServerUrl(), context).provideApi().checkServer().enqueue(new Callback<CheckServer>() {
             @Override
             public void onResponse(@NonNull Call<CheckServer> call, @NonNull Response<CheckServer> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     resultIcon.setImageResource(R.drawable.ic_check_green);
                 } else {
                     resultIcon.setImageResource(R.drawable.ic_close_red);
