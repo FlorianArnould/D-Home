@@ -1,6 +1,5 @@
 package fr.socket.florian.dhome.view.connections;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,10 +27,10 @@ class ConnectionViewHolder extends RecyclerView.ViewHolder {
         resultIcon = view.findViewById(R.id.result_icon);
     }
 
-    void update(Context context, Connection connection) {
+    void update(Connection connection) {
         serverUrl.setText(connection.getServerUrl());
         username.setText(connection.getUsername());
-        new ApiModule("https://" + connection.getServerUrl(), context).provideApi().checkServer().enqueue(new Callback<CheckServer>() {
+        new ApiModule("https://" + connection.getServerUrl(), serverUrl.getContext()).provideApi().checkServer().enqueue(new Callback<CheckServer>() {
             @Override
             public void onResponse(@NonNull Call<CheckServer> call, @NonNull Response<CheckServer> response) {
                 if (response.isSuccessful()) {

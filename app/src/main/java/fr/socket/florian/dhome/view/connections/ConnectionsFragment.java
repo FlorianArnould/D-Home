@@ -40,7 +40,7 @@ public class ConnectionsFragment extends MainFragment {
     @Override
     public void onAttach(final Context context) {
         super.onAttach(context);
-        adapter = new ConnectionAdapter(context);
+        adapter = new ConnectionAdapter();
         if (db == null) {
             db = new Database(context);
         }

@@ -1,6 +1,5 @@
 package fr.socket.florian.dhome.view.connections;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,11 +14,9 @@ import fr.socket.florian.dhome.database.Connection;
 
 class ConnectionAdapter extends RecyclerView.Adapter<ConnectionViewHolder> {
 
-    private Context context;
     private List<Connection> connections;
 
-    ConnectionAdapter(Context context) {
-        this.context = context;
+    ConnectionAdapter() {
         connections = new ArrayList<>();
     }
 
@@ -37,7 +34,7 @@ class ConnectionAdapter extends RecyclerView.Adapter<ConnectionViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ConnectionViewHolder connectionViewHolder, int i) {
-        connectionViewHolder.update(context, connections.get(i));
+        connectionViewHolder.update(connections.get(i));
     }
 
     @Override

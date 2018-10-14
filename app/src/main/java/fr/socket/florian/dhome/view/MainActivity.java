@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import fr.socket.florian.dhome.R;
+import fr.socket.florian.dhome.view.about.AboutFragment;
 import fr.socket.florian.dhome.view.connections.ConnectionsFragment;
 import fr.socket.florian.dhome.view.devices.DevicesFragment;
 
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity
             inflateFragment(new DevicesFragment());
         } else if (id == R.id.nav_connections) {
             inflateFragment(new ConnectionsFragment());
+        } else if (id == R.id.nav_about) {
+            inflateFragment(new AboutFragment());
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
