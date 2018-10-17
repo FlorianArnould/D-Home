@@ -34,16 +34,26 @@ class ConnectionViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onResponse(@NonNull Call<CheckServer> call, @NonNull Response<CheckServer> response) {
                 if (response.isSuccessful()) {
-                    resultIcon.setImageResource(R.drawable.ic_check_green);
+                    onSuccess();
                 } else {
-                    resultIcon.setImageResource(R.drawable.ic_close_red);
+                    onFailed();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<CheckServer> call, @NonNull Throwable t) {
-                resultIcon.setImageResource(R.drawable.ic_close_red);
+                onFailed();
             }
         });
+    }
+
+    private void onSuccess() {
+        resultIcon.setColorFilter(resultIcon.getContext().getColor(R.color.green));
+        resultIcon.setImageResource(R.drawable.ic_check);
+    }
+
+    private void onFailed() {
+        resultIcon.setColorFilter(resultIcon.getContext().getColor(R.color.red));
+        resultIcon.setImageResource(R.drawable.ic_close);
     }
 }

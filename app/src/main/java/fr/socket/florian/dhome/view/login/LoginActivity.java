@@ -138,7 +138,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 transitionDrawable.setCrossFadeEnabled(true);
                 transitionDrawable.startTransition(500);
                 ImageView resultIcon = findViewById(R.id.result_icon);
-                resultIcon.setImageResource(R.drawable.ic_check_white);
+                resultIcon.setImageResource(R.drawable.ic_check);
                 resultIcon.animate().alpha(1).setDuration(500);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -160,7 +160,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 transitionDrawable.setCrossFadeEnabled(true);
                 transitionDrawable.startTransition(500);
                 final ImageView resultIcon = findViewById(R.id.result_icon);
-                resultIcon.setImageResource(R.drawable.ic_close_white);
+                resultIcon.setImageResource(R.drawable.ic_close);
                 resultIcon.animate().alpha(1).setDuration(500);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -193,9 +193,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void run() {
                 if (succeed) {
-                    serverCheckImage.setImageResource(R.drawable.ic_check_green);
+                    serverCheckImage.setColorFilter(getColor(R.color.green));
+                    serverCheckImage.setImageResource(R.drawable.ic_check);
                 } else {
-                    serverCheckImage.setImageResource(R.drawable.ic_close_red);
+                    serverCheckImage.setColorFilter(getColor(R.color.red));
+                    serverCheckImage.setImageResource(R.drawable.ic_close);
                 }
                 serverCheckImage.animate().alpha(1).setDuration(500);
             }
@@ -225,8 +227,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
         if (!hasFocus) {
+            String serverUrlString = serverUrl.getText().toString();
+            if (serverUrlString.isEmpty()) {
+                displayServerCheckResult(false);
+                return;
+            }
             displayServerCheckProgressBar();
-            Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
+            Network network = new ApiModule("https://" + serverUrlString, LoginActivity.this)
                     .provideApi();
             network.checkServer().enqueue(new Callback<CheckServer>() {
                 @Override
@@ -256,13 +263,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         displayButtonToProgress(new Runnable() {
             @Override
             public void run() {
+                final String serverUrlString = serverUrl.getText().toString();
+                final String usernameString  = username.getText().toString();
                 EditText password = findViewById(R.id.edit_password);
-                Network network = new ApiModule("https://" + serverUrl.getText().toString(), LoginActivity.this)
+                final String passwordString = password.getText().toString();
+                if( serverUrlString.isEmpty() || usernameString.isEmpty() || passwordString.isEmpty() ) {
+                    onFailed("Need to fill the 3 fields");
+                    return;
+                }
+                Network network = new ApiModule("https://" + serverUrlString, LoginActivity.this)
                         .provideApi();
                 JSONObject json = new JSONObject();
                 try {
-                    json.put("username", username.getText().toString());
-                    json.put("password", password.getText().toString());
+                    json.put("username", usernameString);
+                    json.put("password", passwordString);
                 } catch (JSONException e) {
                     Log.e(LOGIN_LOG_TAG, "JSON Exception : " + e.getMessage(), e);
                 }
