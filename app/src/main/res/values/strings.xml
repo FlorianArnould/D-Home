@@ -21,4 +21,6 @@
     <string name="icon">Icon</string>
     <string name="icons">Icons</string>
     <string name="repositories">Repositories</string>
+    <string name="cannot_reach_any_server">Cannot reach any server</string>
+    <string name="add_a_server">Add a server</string>
 </resources>

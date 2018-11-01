@@ -9,7 +9,7 @@
     android:padding="10dp">
 
     <TextView
-        android:id="@+id/server_url"
+        android:id="@+id/serverUrl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@android:style/TextAppearance.Material.Title" />
@@ -18,12 +18,12 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/server_url"
+        android:layout_below="@id/serverUrl"
         android:layout_marginTop="5dp"
         android:textAppearance="@android:style/TextAppearance.Material.Body1" />
 
     <ImageView
-        android:id="@+id/result_icon"
+        android:id="@+id/resultIcon"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
