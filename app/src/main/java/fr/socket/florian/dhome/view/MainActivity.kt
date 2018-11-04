@@ -20,6 +20,7 @@ import fr.socket.florian.dhome.R
 import fr.socket.florian.dhome.view.about.AboutFragment
 import fr.socket.florian.dhome.view.connections.ConnectionsFragment
 import fr.socket.florian.dhome.view.devices.DevicesFragment
+import fr.socket.florian.dhome.view.scan.ScanFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlin.math.pow
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
+            R.id.nav_scanner -> inflateFragment(ScanFragment())
             R.id.nav_devices -> inflateFragment(DevicesFragment())
             R.id.nav_connections -> inflateFragment(ConnectionsFragment())
             R.id.nav_about -> inflateFragment(AboutFragment())
@@ -94,10 +96,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Log.d("animate", "start animation")
     }
 
-    fun animateHide(x: Int, y:Int) {
+    fun animateHide(x: Int, y: Int) {
         val finalRadius = sqrt(animationReveal.height.toFloat().pow(2) + animationReveal.width.toFloat().pow(2))
         val animation = ViewAnimationUtils.createCircularReveal(animationReveal, x, y, finalRadius, 0f)
-        animation.addListener(object: Animator.AnimatorListener {
+        animation.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(p0: Animator?) {}
             override fun onAnimationCancel(p0: Animator?) {}
             override fun onAnimationStart(p0: Animator?) {}
@@ -110,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun createIndefiniteSnackbar(@StringRes textRes: Int, @StringRes actionRes: Int, action: () -> Unit) {
         val snackbar = Snackbar.make(fragmentLayout, textRes, Snackbar.LENGTH_INDEFINITE)
-        snackbar.setAction(actionRes) { _ -> action() }
+        snackbar.setAction(actionRes) { action() }
         snackbar.show()
     }
 }

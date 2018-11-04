@@ -3,11 +3,9 @@ package fr.socket.florian.dhome.view.devices
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
-import java.util.ArrayList
-
 import fr.socket.florian.dhome.R
 import fr.socket.florian.dhome.network.model.Device
+import java.util.*
 
 internal class DeviceAdapter : RecyclerView.Adapter<DeviceViewHolder>() {
 

@@ -4,9 +4,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.os.AsyncTask
-
 import java.io.Closeable
-import java.util.ArrayList
+import java.util.*
 
 class Database(context: Context) : Closeable {
     private val db: SQLiteDatabase = DatabaseOpenHelper(context).writableDatabase

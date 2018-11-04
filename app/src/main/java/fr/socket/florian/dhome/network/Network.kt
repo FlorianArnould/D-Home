@@ -1,15 +1,9 @@
 package fr.socket.florian.dhome.network
 
-import fr.socket.florian.dhome.network.model.CheckServer
-import fr.socket.florian.dhome.network.model.Device
-import fr.socket.florian.dhome.network.model.Login
-import fr.socket.florian.dhome.network.model.Tokens
+import fr.socket.florian.dhome.network.model.*
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 internal interface Network {
 
@@ -25,4 +19,12 @@ internal interface Network {
     @GET("api/auth/refreshToken")
     fun refreshToken(@Header("x-access-token") refreshToken: String): Call<Tokens>
 
+    @GET("api/stream/create")
+    fun createScanner(@Header("x-access-token") refreshToken: String): Call<Stream>
+
+    @GET("api/stream/{id}")
+    fun readScanner(@Header("x-access-token") refreshToken: String, @Path("id") id: String): Call<Data>
+
+    @DELETE("api/stream/{id}")
+    fun deleteScanner(@Header("x-access-token") refreshToken: String, @Path("id") id: String): Call<ErrorResponse>
 }

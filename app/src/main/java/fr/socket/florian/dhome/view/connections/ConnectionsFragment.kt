@@ -35,13 +35,13 @@ class ConnectionsFragment : MainFragment() {
         fab.setOnClickListener {
             val array = IntArray(2)
             fab.getLocationInWindow(array)
-            fabX = array[0] + fab.width/2
-            fabY = array[1] + fab.height/2
+            fabX = array[0] + fab.width / 2
+            fabY = array[1] + fab.height / 2
             val activity = activity as MainActivity
 
             val anim = AnimationUtils.loadAnimation(context, R.anim.scale_down)
             anim.duration = 300
-            anim.setAnimationListener(object: Animation.AnimationListener {
+            anim.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationRepeat(p0: Animation?) {}
                 override fun onAnimationStart(p0: Animation?) {}
                 override fun onAnimationEnd(p0: Animation?) {
@@ -78,13 +78,13 @@ class ConnectionsFragment : MainFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == NEW_LOGIN) {
+        if (requestCode == NEW_LOGIN) {
             db.getConnections { connections -> adapter.update(connections) }
             Handler().postDelayed({
                 (activity as MainActivity).animateHide(fabX, fabY)
                 val anim = AnimationUtils.loadAnimation(context, R.anim.scale_up)
                 anim.duration = 300
-                anim.setAnimationListener(object: Animation.AnimationListener {
+                anim.setAnimationListener(object : Animation.AnimationListener {
                     override fun onAnimationRepeat(p0: Animation?) {}
                     override fun onAnimationStart(p0: Animation?) {}
                     override fun onAnimationEnd(p0: Animation?) {

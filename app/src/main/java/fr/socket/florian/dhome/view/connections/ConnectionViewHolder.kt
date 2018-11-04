@@ -5,13 +5,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import fr.socket.florian.dhome.R
-
 import fr.socket.florian.dhome.database.Connection
-import fr.socket.florian.dhome.network.ApiModule
+import fr.socket.florian.dhome.network.ApiCallback
+import fr.socket.florian.dhome.network.ApiManager
 import fr.socket.florian.dhome.network.model.CheckServer
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.json.JSONObject
 
 internal class ConnectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -22,19 +20,15 @@ internal class ConnectionViewHolder(view: View) : RecyclerView.ViewHolder(view) 
     fun update(connection: Connection) {
         serverUrl.text = connection.serverUrl
         username.text = connection.username
-//        ApiModule("https://" + connection.serverUrl, serverUrl.context).provideApi().checkServer().enqueue(object : ApiCallback<CheckServer> {
-//            override fun onResponse(call: Call<CheckServer>, response: Response<CheckServer>) {
-//                if (response.isSuccessful) {
-//                    onSuccess()
-//                } else {
-//                    onFailed()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<CheckServer>, t: Throwable) {
-//                onFailed()
-//            }
-//        })
+        ApiManager.checkServer(serverUrl.context, connection.serverUrl, object : ApiCallback<CheckServer>() {
+            override fun onSuccess(response: CheckServer) {
+                onSuccess()
+            }
+
+            override fun onFailure(response: JSONObject?, code: Int) {
+                onFailed()
+            }
+        })
     }
 
     private fun onSuccess() {

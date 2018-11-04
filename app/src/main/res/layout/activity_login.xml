@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
-    
+
     <ImageView
         android:id="@+id/back"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:padding="16dp"
         android:src="@drawable/ic_arrow_back"
         android:tint="@android:color/white"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:focusable="true"
-        android:clickable="true"
-        android:visibility="invisible"/>
+        android:contentDescription="@string/back_button"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/logo"
@@ -37,7 +38,7 @@
         android:layout_alignParentBottom="true"
         android:alpha="0"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </fr.socket.florian.dhome.view.login.ContainerViewHandler>

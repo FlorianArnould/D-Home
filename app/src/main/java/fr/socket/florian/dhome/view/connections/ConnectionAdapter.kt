@@ -3,11 +3,9 @@ package fr.socket.florian.dhome.view.connections
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
-import java.util.ArrayList
-
 import fr.socket.florian.dhome.R
 import fr.socket.florian.dhome.database.Connection
+import java.util.*
 
 internal class ConnectionAdapter : RecyclerView.Adapter<ConnectionViewHolder>() {
 

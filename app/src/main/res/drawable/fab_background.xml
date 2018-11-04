@@ -9,6 +9,5 @@
         android:bottomLeftRadius="@dimen/fab_radius"
         android:bottomRightRadius="@dimen/fab_radius"
         android:topLeftRadius="@dimen/fab_radius"
-        android:topRightRadius="@dimen/fab_radius
-" />
+        android:topRightRadius="@dimen/fab_radius" />
 </shape>

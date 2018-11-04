@@ -12,30 +12,32 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
 
         <RelativeLayout
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:clickable="true"
             android:elevation="6dp"
-            android:focusable="true"
-            android:clickable="true">
+            android:focusable="true">
 
             <ImageView
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/fab_background"/>
+                android:background="@drawable/fab_background"
+                android:contentDescription="@string/fab_background"/>
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_add"
                 android:layout_centerInParent="true"
-                android:tint="@android:color/white"/>
+                android:src="@drawable/ic_add"
+                android:tint="@android:color/white"
+                android:contentDescription="@string/fab_icon"/>
 
         </RelativeLayout>
 
@@ -53,16 +55,17 @@
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="16dp"
-                android:focusable="true"
                 android:clickable="true"
+                android:focusable="true"
                 android:src="@drawable/ic_close"
-                android:tint="@android:color/white"/>
+                android:tint="@android:color/white"
+                android:contentDescription="@string/status_icon"/>
 
             <fr.socket.florian.dhome.view.login.LoginForm
                 android:id="@+id/loginForm"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" />
 
         </RelativeLayout>
 

@@ -2,12 +2,16 @@ package fr.socket.florian.dhome.network
 
 import android.content.Context
 import android.util.Log
-
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-
+import fr.socket.florian.dhome.R
+import io.realm.RealmObject
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.io.InputStream
 import java.security.KeyManagementException
@@ -18,17 +22,9 @@ import java.security.cert.Certificate
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.util.concurrent.TimeUnit
-
 import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManagerFactory
-
-import fr.socket.florian.dhome.R
-import io.realm.RealmObject
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.net.ssl.TrustManager
+import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
 
@@ -123,7 +119,7 @@ internal class ApiModule(private val baseUrl: String, context: Context) {
     }
 
     // TODO: 10/10/18 Remove this function
-    private fun createUnsafeOkHttpClient() : OkHttpClient {
+    private fun createUnsafeOkHttpClient(): OkHttpClient {
         try {
             val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
                 override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}

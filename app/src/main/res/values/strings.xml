@@ -2,7 +2,7 @@
     <string name="app_name">D-Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">D is for Smart</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
@@ -23,4 +23,9 @@
     <string name="repositories">Repositories</string>
     <string name="cannot_reach_any_server">Cannot reach any server</string>
     <string name="add_a_server">Add a server</string>
+    <string name="scanner">Scanner</string>
+    <string name="back_button">Back button</string>
+    <string name="fab_background">FAB background</string>
+    <string name="fab_icon">FAB Icon</string>
+    <string name="status_icon">Status icon</string>
 </resources>

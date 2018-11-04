@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
         val isNotLaunchActivity = intent.getBooleanExtra(IS_NOT_LAUNCH_ACTIVITY, false)
-        if(isNotLaunchActivity) {
+        if (isNotLaunchActivity) {
             val set = ConstraintSet()
             set.clone(this@LoginActivity, R.layout.activity_login_transition)
             set.applyTo(rootLayout)
@@ -62,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }, 1000)
         }
-        loginForm.onServerUrlChanged = {url, callback ->
+        loginForm.onServerUrlChanged = { url, callback ->
             ApiManager.checkServer(this@LoginActivity, url, object : ApiCallback<CheckServer>() {
                 override fun onSuccess(response: CheckServer) {
                     callback(response.isRunning)
@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
         back.setOnClickListener { onBackPressed() }
 
         loginForm.onFormFinished = {
-            if(isNotLaunchActivity) {
+            if (isNotLaunchActivity) {
                 finish()
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             } else {

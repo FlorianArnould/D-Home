@@ -11,5 +11,7 @@ internal class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val title: TextView = view.findViewById(R.id.title)
 
-    fun update(@StringRes stringRes: Int) { title.setText(stringRes) }
+    fun update(@StringRes stringRes: Int) {
+        title.setText(stringRes)
+    }
 }

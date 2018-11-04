@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 
 import fr.socket.florian.dhome.R
 import fr.socket.florian.dhome.network.ApiManager
@@ -48,8 +47,8 @@ class DevicesFragment : MainFragment() {
     private fun update(context: Context) {
         apiManager?.close()
         apiManager = ApiManager().initialize(context, 1) { api ->
-            api.getAllDevices({ devices ->
-                if(devices == null) {
+            api.getAllDevices { devices ->
+                if (devices == null) {
                     val activity = (activity as MainActivity)
                     activity.createIndefiniteSnackbar(R.string.cannot_reach_any_server, R.string.add_a_server) {
                         val intent = Intent(context, LoginActivity::class.java)
@@ -57,9 +56,8 @@ class DevicesFragment : MainFragment() {
                         startActivityForResult(intent, NEW_LOGIN)
                         activity.overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
                     }
-                }
-                else adapter.update(devices)
-            })
+                } else adapter.update(devices)
+            }
         }
     }
 

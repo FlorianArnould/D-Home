@@ -18,7 +18,7 @@ abstract class ApiCallback<T> : Callback<T> {
             }
         } else {
             val body = response.errorBody()
-            if(body != null) {
+            if (body != null) {
                 try {
                     onFailure(JSONObject(body.string()), response.code())
                 } catch (e: JSONException) {

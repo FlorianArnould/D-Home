@@ -7,11 +7,9 @@ import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
-import java.util.Random
-
 import fr.socket.florian.dhome.R
 import fr.socket.florian.dhome.network.model.Device
+import java.util.*
 
 internal class DeviceViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
     private val name: TextView = view.findViewById(R.id.name)

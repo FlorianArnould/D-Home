@@ -15,7 +15,7 @@ import fr.socket.florian.dhome.R
 import kotlinx.android.synthetic.main.activity_login_content.view.*
 
 class LoginForm : ConstraintLayout, View.OnFocusChangeListener, View.OnClickListener, TextView.OnEditorActionListener {
-    var onSubmitClickListener: (url: String, username: String, password: String, callback: (succeed: Boolean, message: String) -> Unit) -> Unit = {_, _, _, _ -> }
+    var onSubmitClickListener: (url: String, username: String, password: String, callback: (succeed: Boolean, message: String) -> Unit) -> Unit = { _, _, _, _ -> }
     var onServerUrlChanged: (url: String, callback: (succeed: Boolean) -> Unit) -> Unit = { _, _ -> }
     var onFormFinished: () -> Unit = {}
 
@@ -84,7 +84,7 @@ class LoginForm : ConstraintLayout, View.OnFocusChangeListener, View.OnClickList
                 onFailed("Need to fill the 3 fields")
                 return@Runnable
             }
-            onSubmitClickListener(serverUrlString, usernameString, passwordString) { succeed, message -> if(succeed) onSuccess() else onFailed(message) }
+            onSubmitClickListener(serverUrlString, usernameString, passwordString) { succeed, message -> if (succeed) onSuccess() else onFailed(message) }
         })
     }
 
