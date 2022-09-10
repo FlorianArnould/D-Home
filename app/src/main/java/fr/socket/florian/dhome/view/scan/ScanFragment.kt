@@ -16,7 +16,7 @@ import fr.socket.florian.dhome.view.MainFragment
 import java.lang.StringBuilder
 
 class ScanFragment : MainFragment() {
-    private val apiManager: ApiManager = ApiManager()
+    private val apiManager: ApiManager = ApiManager(1)
     private lateinit var scanRefresher: ScanRefresher
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +63,7 @@ class ScanFragment : MainFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         setTitle(R.string.scanner)
-        apiManager.initialize(context, 1){
+        apiManager.initialize(context){
             scanRefresher.create()
         }
     }

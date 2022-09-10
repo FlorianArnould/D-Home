@@ -19,7 +19,7 @@ import fr.socket.florian.dhome.view.login.LoginActivity
 class DevicesFragment : MainFragment() {
 
     private val adapter: DeviceAdapter = DeviceAdapter()
-    private var apiManager: ApiManager? = null
+    private val apiManager: ApiManager = ApiManager(1)
 
     init {
         // This shouldn't be called from other classes if there are some arguments
@@ -45,8 +45,7 @@ class DevicesFragment : MainFragment() {
     }
 
     private fun update(context: Context) {
-        apiManager?.close()
-        apiManager = ApiManager().initialize(context, 1) { api ->
+        apiManager.initialize(context) { api ->
             api.getAllDevices { devices ->
                 if (devices == null) {
                     val activity = (activity as MainActivity)
@@ -79,7 +78,7 @@ class DevicesFragment : MainFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        apiManager?.close()
+        apiManager.close()
     }
 
     companion object {

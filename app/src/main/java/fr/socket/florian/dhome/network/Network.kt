@@ -10,16 +10,19 @@ internal interface Network {
     @GET("api/")
     fun checkServer(): Call<CheckServer>
 
-    @POST("api/auth/login")
+    @POST("api/login")
     fun login(@Body body: RequestBody): Call<Login>
 
-    @GET("api/device/all")
+    @GET("api/device")
     fun allDevices(@Header("x-access-token") sessionToken: String): Call<List<Device>>
 
-    @GET("api/auth/refreshToken")
+    @PUT("api/device/{id}")
+    fun setDeviceStatus(@Header("x-access-token") sessionToken: String, @Path("id") id: Int, @Body body: RequestBody): Call<ErrorResponse>
+
+    @GET("api/refreshToken")
     fun refreshToken(@Header("x-access-token") refreshToken: String): Call<Tokens>
 
-    @GET("api/stream/create")
+    @GET("api/stream")
     fun createScanner(@Header("x-access-token") refreshToken: String): Call<Stream>
 
     @GET("api/stream/{id}")

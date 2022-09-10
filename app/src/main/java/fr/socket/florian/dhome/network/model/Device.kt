@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 class Device {
     @SerializedName("id")
-    val id: String? = null
+    val id: Int = 0
 
     @SerializedName("name")
     val name: String? = null

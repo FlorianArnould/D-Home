@@ -70,7 +70,7 @@ internal class AboutAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     companion object {
-        private const val SMASHICONS_TEXT = "Icon made by Smashicons from www.flaticon.com "
+        private const val SMASHICONS_TEXT = "Icon made by Smashicons from www.flaticon.com"
         private const val SMASHICONS_URL = "https://smashicons.com/"
         private const val ICON_VIEW_TYPE = 1
         private const val HEADER_VIEW_TYPE = 2

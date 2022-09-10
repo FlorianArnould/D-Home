@@ -15,7 +15,7 @@ import retrofit2.Response
 import java.io.Closeable
 import java.util.concurrent.CountDownLatch
 
-class ApiManager : Closeable {
+class ApiManager(private val connectionId: Int) : Closeable {
 
     private lateinit var connection: Connection
     private lateinit var network: Network
@@ -23,7 +23,12 @@ class ApiManager : Closeable {
     private var counter: Int = 0
     private lateinit var countDown: CountDownLatch
 
-    fun initialize(context: Context, connectionId: Int, callback: (ApiManager) -> Unit): ApiManager {
+    constructor(context: Context, connection: Connection) : this(0){
+        this.connection = connection
+        network = ApiModule("https://" + connection.serverUrl, context).provideApi()
+    }
+
+    fun initialize(context: Context, callback: (ApiManager) -> Unit): ApiManager {
         db = Database(context)
         db.getConnectionById(connectionId) { connection ->
             this@ApiManager.connection = connection
@@ -71,6 +76,13 @@ class ApiManager : Closeable {
 
     fun getAllDevices(callback: (List<Device>?) -> Unit) {
         request(network.allDevices(connection.sessionToken), callback)
+    }
+
+    fun setDeviceStatus(deviceStatus: Status, id: Int, callback: (ErrorResponse?) -> Unit) {
+        val json = JSONObject()
+        json.put("status", deviceStatus.toString())
+        val body = RequestBody.create(MediaType.parse("application/json"), json.toString())
+        request(network.setDeviceStatus(connection.sessionToken, id, body), callback)
     }
 
     fun createScanner(callback: (Stream?) -> Unit) {
